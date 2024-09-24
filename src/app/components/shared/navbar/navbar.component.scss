@@ -1,0 +1,25 @@
+nav{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: black;
+    width: 100vw;
+    height: 10vh;
+
+
+
+    >h2{
+        font-size: 20px;
+        color: white;
+        padding-left: 20px;
+    }
+
+    >div{
+        display: flex;
+        color: white;
+        gap: 16px;
+        padding-right: 20px;
+
+    }
+}
+
