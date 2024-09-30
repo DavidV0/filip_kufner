@@ -1,0 +1,46 @@
+.video-background {
+    position: fixed;      
+    top: 0;
+    left: 0;
+    width: 100vw;         
+    height: 100vh;        
+    z-index: -1;           
+    overflow: hidden;
+  }
+  
+  .video-background video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+  }
+  
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); 
+    z-index: 1;  
+  }
+
+  .content{
+    color: white;
+    width: 100vw;
+    max-width: 1440px;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    >h1{
+        z-index: 10;
+    }
+}
+

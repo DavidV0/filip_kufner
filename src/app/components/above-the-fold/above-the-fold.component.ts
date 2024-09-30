@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-above-the-fold',
@@ -7,6 +7,18 @@ import { Component } from '@angular/core';
   templateUrl: './above-the-fold.component.html',
   styleUrl: './above-the-fold.component.scss'
 })
-export class AboveTheFoldComponent {
+export class AboveTheFoldComponent implements AfterViewInit {
 
+
+  @ViewChild('backgroundVideo', { static: false }) videoElement!: ElementRef;
+
+  constructor() { }
+
+  ngAfterViewInit() {
+    if (this.videoElement) {
+      const video: HTMLVideoElement = this.videoElement.nativeElement;
+      video.muted = true;  
+      video.play().catch(err => console.error('Autoplay prevented:', err));  
+    }
+  }
 }
