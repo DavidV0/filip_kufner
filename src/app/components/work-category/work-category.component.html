@@ -1,1 +1,4 @@
-<div></div>
+<div class="work-category">
+  <img [src]="imageUrl" alt="{{ title }}" />
+  <div *ngIf="title" class="title-overlay">{{ title }}</div>
+</div>

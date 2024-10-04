@@ -1,1 +1,10 @@
-<app-work-category> </app-work-category>
+<div class="work-collection">
+  <div class="work-grid">
+    <app-work-category
+      *ngFor="let category of categories"
+      [title]="category.title"
+      [imageUrl]="category.imageUrl"
+    >
+    </app-work-category>
+  </div>
+</div>

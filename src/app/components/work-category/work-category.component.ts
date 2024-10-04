@@ -1,12 +1,14 @@
-import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-work-category',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './work-category.component.html',
-  styleUrl: './work-category.component.scss'
+  styleUrl: './work-category.component.scss',
 })
 export class WorkCategoryComponent {
-
+  @Input() title: string = '';
+  @Input() imageUrl: string = '';
 }
