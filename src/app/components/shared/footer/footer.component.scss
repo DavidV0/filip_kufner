@@ -1,7 +1,7 @@
 .footer {
   border-top: white solid 1px;
-  background-color: #000; /* Schwarzer Hintergrund */
-  color: #fff; /* Weißer Text */
+  background-color: #000;
+  color: #fff;
   padding: 20px 0;
 
   .footer-container {
@@ -15,6 +15,9 @@
 
   .footer-left {
     font-size: 14px;
+    > p {
+      cursor: pointer;
+    }
   }
 
   .footer-right {
