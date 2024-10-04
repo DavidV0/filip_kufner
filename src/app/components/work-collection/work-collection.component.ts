@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
+import { WorkCategoryComponent } from '../work-category/work-category.component';
 
 @Component({
   selector: 'app-work-collection',
   standalone: true,
-  imports: [],
+  imports: [WorkCategoryComponent],
   templateUrl: './work-collection.component.html',
-  styleUrl: './work-collection.component.scss'
+  styleUrl: './work-collection.component.scss',
 })
-export class WorkCollectionComponent {
-
-}
+export class WorkCollectionComponent {}

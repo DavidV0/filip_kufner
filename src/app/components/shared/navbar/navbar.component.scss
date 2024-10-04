@@ -1,29 +1,30 @@
-nav{
-    position: fixed;
-    top: 0;
-    z-index: 10;
+nav {
+  position: fixed;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100vw;
+  max-width: 1440px;
+  height: 10vh;
+
+  > h2 {
+    font-size: 20px;
+    color: white;
+    padding-left: 20px;
+    cursor: pointer;
+  }
+
+  > div {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100vw;
-    max-width: 1440px;
-    height: 10vh;
-    
+    color: white;
+    gap: 16px;
+    padding-right: 20px;
 
-
-
-    >h2{
-        font-size: 20px;
-        color: white;
-        padding-left: 20px;
+    > p {
+      padding: 2px;
+      cursor: pointer;
     }
-
-    >div{
-        display: flex;
-        color: white;
-        gap: 16px;
-        padding-right: 20px;
-
-    }
+  }
 }
-
