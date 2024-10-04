@@ -4,6 +4,8 @@ import { NavbarComponent } from './components/shared/navbar/navbar.component';
 import { AboveTheFoldComponent } from './components/above-the-fold/above-the-fold.component';
 import { WorkCollectionComponent } from './components/work-collection/work-collection.component';
 import { FooterComponent } from './components/shared/footer/footer.component';
+import { AboutMeComponent } from './components/about-me/about-me.component';
+import { ConnectComponent } from './components/connect/connect.component';
 
 @Component({
   selector: 'app-root',
@@ -15,6 +17,8 @@ import { FooterComponent } from './components/shared/footer/footer.component';
     AboveTheFoldComponent,
     WorkCollectionComponent,
     FooterComponent,
+    AboutMeComponent,
+    ConnectComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
