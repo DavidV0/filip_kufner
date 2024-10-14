@@ -1,9 +1,10 @@
 import { Component, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
+import { WorkCollectionComponent } from "../work-collection/work-collection.component";
 
 @Component({
   selector: 'app-above-the-fold',
   standalone: true,
-  imports: [],
+  imports: [WorkCollectionComponent],
   templateUrl: './above-the-fold.component.html',
   styleUrl: './above-the-fold.component.scss'
 })

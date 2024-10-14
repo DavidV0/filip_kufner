@@ -3,6 +3,7 @@
   background-color: #000;
   color: #fff;
   padding: 20px 0;
+  width: 100vw;
 
   .footer-container {
     display: flex;
@@ -15,8 +16,10 @@
 
   .footer-left {
     font-size: 14px;
-    > p {
+    > a {
       cursor: pointer;
+      text-decoration: none;
+      color: white;
     }
   }
 
