@@ -15,11 +15,18 @@
   }
 
   .footer-left {
+    display: flex;
+    flex-direction: column;
     font-size: 14px;
+    gap: 8px;
     > a {
       cursor: pointer;
       text-decoration: none;
       color: white;
+    }
+
+    >p{
+      margin: 0;
     }
   }
 
