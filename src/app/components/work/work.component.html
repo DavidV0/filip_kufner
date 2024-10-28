@@ -1,1 +1,39 @@
-<p>work works!</p>
+<div class="work-page">
+  <!-- Category Header -->
+  <div class="category-header" *ngIf="selectedCategory">
+    <div class="header-content">
+      <span class="back-arrow" (click)="clearSelectedCategory()">
+        <i class="fas fa-arrow-left"></i>
+      </span>
+      <h1>{{ selectedCategory.title }}</h1>
+    </div>
+  </div>
+
+  <!-- Subcategories Grid -->
+  <div class="subcategories-container" *ngIf="selectedCategory">
+    <div class="subcategories-grid">
+      <div 
+        class="subcategory-card" 
+        *ngFor="let subCategory of selectedCategory.subCategories"
+        (click)="onSubCategoryClick(subCategory)"
+      >
+        <!-- Show first image as cover if available -->
+        <div class="subcategory-image" 
+             [ngStyle]="{'background-image': 'url(' + (subCategory.images[0] || 'assets/images/placeholder.jpg') + ')'}"
+        >
+        </div>
+        <div class="subcategory-info">
+          <h2>{{ subCategory.title }}</h2>
+          <p *ngIf="subCategory.description">{{ subCategory.description }}</p>
+          <span class="image-count">{{ subCategory.images.length }} images</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No Category Selected State -->
+  <div class="no-category" *ngIf="!selectedCategory">
+    <app-work-collection></app-work-collection>
+    <button (click)="navigateHome()" class="home-button">Go to Home</button>
+  </div>
+</div>

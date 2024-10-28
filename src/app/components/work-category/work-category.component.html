@@ -2,6 +2,7 @@
   <div
     class="work-category"
     [ngStyle]="{ 'background-image': 'url(' + imageUrl + ')' }"
+    (click)="onCategoryClick()"
   >
     <div class="title-overlay">{{ title }}</div>
   </div>

@@ -1,0 +1,47 @@
+<div class="gallery-container">
+  <!-- Header with Navigation -->
+  <div class="gallery-header">
+    <div class="navigation-links">
+      <span class="nav-link" (click)="openCategorySelector()">Work</span>
+      <span class="separator" *ngIf="category"> > </span>
+      <span class="nav-link" *ngIf="category" (click)="openCategorySelector()">{{ category.title }}</span>
+      <span class="separator" *ngIf="subCategory"> > </span>
+      <span *ngIf="subCategory">{{ subCategory.title }}</span>
+    </div>
+    <p *ngIf="subCategory">{{ subCategory.description }}</p>
+  </div>
+
+  <!-- Image Grid -->
+  <div class="image-grid">
+    <div 
+      class="image-item" 
+      *ngFor="let image of subCategory?.images; let i = index"
+      (click)="openLightbox(i)"
+    >
+      <img 
+        [src]="image" 
+        [alt]="'Image ' + (i + 1)"
+        loading="lazy"
+      >
+    </div>
+  </div>
+
+  <!-- Lightbox -->
+  <div class="lightbox" *ngIf="selectedImageIndex !== -1 && subCategory" (click)="closeLightbox()">
+    <div class="lightbox-content" (click)="$event.stopPropagation()">
+      <button class="close-button" (click)="closeLightbox()">&times;</button>
+      <button class="nav-button prev" (click)="previousImage()" *ngIf="selectedImageIndex > 0">
+        &#10094;
+      </button>
+      <button class="nav-button next" 
+              (click)="nextImage()" 
+              *ngIf="subCategory && selectedImageIndex < subCategory.images.length - 1">
+        &#10095;
+      </button>
+      <img 
+        [src]="subCategory.images[selectedImageIndex]" 
+        [alt]="'Image ' + (selectedImageIndex + 1)"
+      >
+    </div>
+  </div>
+</div> 

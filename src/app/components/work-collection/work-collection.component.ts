@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { WorkCategoryComponent } from '../work-category/work-category.component';
 import { CommonModule } from '@angular/common';
+import { CategoryService } from '../../services/category.service';
+import { Category } from '../../interfaces/category.interface';
 
 @Component({
   selector: 'app-work-collection',
@@ -10,11 +12,9 @@ import { CommonModule } from '@angular/common';
   styleUrl: './work-collection.component.scss',
 })
 export class WorkCollectionComponent {
-  categories = [
-    { title: 'Weddings', imageUrl: 'assets/images/bsp1.png' },
-    { title: 'Sport', imageUrl: 'assets/images/bsp1.png' },
-    { title: 'Night life', imageUrl: 'assets/images/bsp1.png' },
-    { title: 'Cars', imageUrl: 'assets/images/bsp1.png' },
-    { title: 'Friends', imageUrl: 'assets/images/bsp1.png' },
-  ];
+  categories: Category[] = [];
+
+  constructor(private categoryService: CategoryService) {
+    this.categories = this.categoryService.getCategories();
+  }
 }
