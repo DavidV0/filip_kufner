@@ -24,10 +24,12 @@ export class WorkComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(params => {
       if (params['categoryId']) {
-        this.selectedCategory = this.categoryService.getCategoryById(params['categoryId']);
-        if (!this.selectedCategory) {
-          this.router.navigate(['/home']);
-        }
+        this.categoryService.getCategoryById(params['categoryId']).subscribe(category => {
+          this.selectedCategory = category;
+          if (!this.selectedCategory) {
+            this.router.navigate(['/home']);
+          }
+        });
       }
     });
 

@@ -1,1 +1,66 @@
-<p>add works!</p>
+<div class="admin-dashboard">
+  <ng-container *ngIf="isAuthenticated$ | async; else loginPrompt">
+    <div class="header">
+      <h2>Admin Dashboard</h2>
+      <button (click)="logout()" class="logout-btn">Logout</button>
+    </div>
+    
+    <!-- Add Category Form -->
+    <form [formGroup]="categoryForm" (ngSubmit)="addCategory()" class="category-form">
+      <div class="form-group">
+        <label for="name">Category Name:</label>
+        <input type="text" id="name" formControlName="name" placeholder="Enter category name">
+      </div>
+
+      <div class="form-group">
+        <label for="image">Category Image:</label>
+        <input type="file" id="image" (change)="onFileSelected($event)" accept="image/*">
+      </div>
+
+      <button type="submit" [disabled]="!categoryForm.valid || !selectedFile || isLoading">
+        {{ isLoading ? 'Adding...' : 'Add Category' }}
+      </button>
+    </form>
+
+    <!-- Categories List -->
+    <div class="categories-list">
+      <h3>Existing Categories</h3>
+      <div *ngFor="let category of categories$ | async" class="category-item">
+        <div class="category-header">
+          <img [src]="category.imageUrl" alt="category image" *ngIf="category.imageUrl">
+          <h4>{{ category.name }}</h4>
+          <button (click)="deleteCategory(category)" class="delete-btn">Delete Category</button>
+        </div>
+
+        <!-- Subcategories -->
+        <div class="subcategories">
+          <h5>Subcategories:</h5>
+          <ul>
+            <li *ngFor="let sub of category.subcategories" class="subcategory-item">
+              <img [src]="sub.imageUrl" alt="subcategory image" *ngIf="sub.imageUrl">
+              <span>{{ sub.name }}</span>
+              <button (click)="deleteSubcategory(category, sub)" class="delete-btn">Delete</button>
+            </li>
+          </ul>
+          
+          <!-- Add Subcategory Form -->
+          <form [formGroup]="subcategoryForm" class="add-subcategory">
+            <input type="text" formControlName="name" placeholder="New subcategory name">
+            <input type="file" (change)="onFileSelected($event, true)" accept="image/*">
+            <button (click)="addSubcategory(category.id!)" 
+                    [disabled]="!subcategoryForm.valid || !selectedSubcategoryFile">
+              Add Subcategory
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #loginPrompt>
+    <div class="login-prompt">
+      <p>Admin access required.</p>
+      <button (click)="navigateToLogin()">Admin Login</button>
+    </div>
+  </ng-template>
+</div>

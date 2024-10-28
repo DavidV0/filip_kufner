@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CategoryService } from '../../services/category.service';
 import { Category, SubCategory } from '../../interfaces/category.interface';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-gallery-view',
@@ -12,7 +13,7 @@ import { Category, SubCategory } from '../../interfaces/category.interface';
   styleUrl: './gallery-view.component.scss'
 })
 export class GalleryViewComponent implements OnInit {
-  category?: Category;
+  category$!: Observable<Category | undefined>;
   subCategory?: SubCategory;
   selectedImageIndex: number = -1;
 
@@ -27,12 +28,14 @@ export class GalleryViewComponent implements OnInit {
       const categoryId = params['categoryId'];
       const subCategoryId = params['subCategoryId'];
       
-      this.category = this.categoryService.getCategoryById(categoryId);
-      this.subCategory = this.category?.subCategories.find(sub => sub.id === subCategoryId);
+      this.category$ = this.categoryService.getCategoryById(categoryId);
+      this.category$.subscribe(category => {
+        this.subCategory = category?.subCategories.find(sub => sub.id === subCategoryId);
 
-      if (!this.category || !this.subCategory) {
-        this.router.navigate(['/work']);
-      }
+        if (!category || !this.subCategory) {
+          this.router.navigate(['/work']);
+        }
+      });
     });
   }
 

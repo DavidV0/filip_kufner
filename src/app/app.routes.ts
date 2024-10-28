@@ -7,6 +7,7 @@ import { ImprintComponent } from './components/imprint/imprint.component';
 import { PrivacyPolicyComponent } from './components/privacy-policy/privacy-policy.component';
 import { AddComponent } from './components/add/add.component';
 import { GalleryViewComponent } from './components/gallery-view/gallery-view.component';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
     {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -18,5 +19,14 @@ export const routes: Routes = [
     {path: 'connect', component: ConnectComponent},
     {path: 'imprint', component: ImprintComponent},
     {path: 'privacy-policy', component: PrivacyPolicyComponent},
-    {path: 'add', component: AddComponent},
+    { 
+        path: 'admin', 
+        loadComponent: () => import('./components/add/add.component').then(m => m.AddComponent),
+        canActivate: [authGuard]
+      },
+      {
+        path: 'login',
+        loadComponent: () => import('./components/login/login.component').then(m => m.LoginComponent)
+      },
+     
 ];

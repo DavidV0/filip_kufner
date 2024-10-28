@@ -1,0 +1,148 @@
+.admin-dashboard {
+  height: 100vh;
+  padding-top: 12vh;
+  background-color: black;
+  color: white;
+  width: 100vw;
+  max-width: 1440px;
+  margin: 0 auto;
+  overflow-y: auto;
+
+  .category-form {
+    margin-bottom: 30px;
+    padding: 20px;
+    background: #1a1a1a;
+    border-radius: 8px;
+
+    .form-group {
+      margin-bottom: 15px;
+
+      label {
+        display: block;
+        margin-bottom: 5px;
+        color: #fff;
+      }
+
+      input {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #333;
+        border-radius: 4px;
+        background: #2a2a2a;
+        color: white;
+
+        &:focus {
+          outline: none;
+          border-color: #007bff;
+        }
+      }
+    }
+  }
+
+  .categories-list {
+    .category-item {
+      margin-bottom: 20px;
+      padding: 15px;
+      border: 1px solid #333;
+      border-radius: 8px;
+      background: #1a1a1a;
+
+      .category-header {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+
+        img {
+          width: 50px;
+          height: 50px;
+          object-fit: cover;
+          border-radius: 4px;
+        }
+      }
+
+      .subcategories {
+        margin-top: 10px;
+        padding-left: 20px;
+
+        .subcategory-item {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          margin-bottom: 10px;
+
+          img {
+            width: 30px;
+            height: 30px;
+            object-fit: cover;
+            border-radius: 4px;
+          }
+        }
+
+        .add-subcategory {
+          margin-top: 15px;
+          display: flex;
+          gap: 10px;
+          align-items: center;
+
+          input[type="text"] {
+            padding: 8px;
+            border: 1px solid #333;
+            border-radius: 4px;
+            background: #2a2a2a;
+            color: white;
+          }
+        }
+      }
+    }
+  }
+
+  button {
+    padding: 8px 16px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background: #0056b3;
+    }
+
+    &:disabled {
+      background: #333;
+      cursor: not-allowed;
+    }
+
+    &.delete-btn {
+      background: #dc3545;
+
+      &:hover {
+        background: #c82333;
+      }
+    }
+  }
+
+  .login-prompt {
+    text-align: center;
+    padding: 20px;
+    background: #1a1a1a;
+    border-radius: 8px;
+    margin-top: 20px;
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .logout-btn {
+    background: #6c757d;
+    
+    &:hover {
+      background: #5a6268;
+    }
+  }
+}

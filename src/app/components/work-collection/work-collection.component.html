@@ -1,11 +1,12 @@
 <div class="work-collection">
-  <div class="work-grid">
+  <div class="work-grid" *ngIf="!(isLoading)">
     <app-work-category
-      *ngFor="let category of categories"
+      *ngFor="let category of categories$ | async"
       [title]="category.title"
       [imageUrl]="category.imageUrl"
       [categoryId]="category.id"
     >
     </app-work-category>
   </div>
+  <div *ngIf="isLoading" class="loading">Loading...</div>
 </div>
