@@ -6,7 +6,7 @@ import { Component, Input } from '@angular/core';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './work-category.component.html',
-  styleUrl: './work-category.component.scss',
+  styleUrls: ['./work-category.component.scss'],
 })
 export class WorkCategoryComponent {
   @Input() title: string = '';

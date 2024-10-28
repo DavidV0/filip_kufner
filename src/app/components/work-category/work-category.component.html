@@ -1,4 +1,8 @@
-<div class="work-category">
-  <img [src]="imageUrl" alt="{{ title }}" />
-  <div *ngIf="title" class="title-overlay">{{ title }}</div>
+<div class="container">
+  <div
+    class="work-category"
+    [ngStyle]="{ 'background-image': 'url(' + imageUrl + ')' }"
+  >
+    <div class="title-overlay">{{ title }}</div>
+  </div>
 </div>

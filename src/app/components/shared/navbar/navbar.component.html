@@ -1,11 +1,20 @@
-<nav>
-    <div>
-        <a routerLink="/" routerLinkActive="active">Filip</a>
-        <div>
-            <a routerLink="/" routerLinkActive="active" >Home</a>
-            <a routerLink="/work" routerLinkActive="active">Work</a>
-            <a routerLink="/about" routerLinkActive="active">About</a>
-            <a routerLink="/connect" routerLinkActive="active">Connect</a>
-        </div>
+<nav class="navbar">
+  <div class="navbar-content">
+    <a class="logo" routerLink="/">Filip</a>
+    <button class="burger-menu" (click)="toggleMenu()">
+      <span [ngClass]="{ open: isMenuOpen }"></span>
+    </button>
+    <div class="nav-links" [ngClass]="{ open: isMenuOpen }">
+      <a routerLink="/" routerLinkActive="active" (click)="closeMenu()">Home</a>
+      <a routerLink="/work" routerLinkActive="active" (click)="closeMenu()"
+        >Work</a
+      >
+      <a routerLink="/about" routerLinkActive="active" (click)="closeMenu()"
+        >About</a
+      >
+      <a routerLink="/connect" routerLinkActive="active" (click)="closeMenu()"
+        >Connect</a
+      >
     </div>
+  </div>
 </nav>

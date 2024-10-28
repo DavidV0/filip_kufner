@@ -1,4 +1,4 @@
-nav {
+.navbar {
   position: absolute;
   top: 0;
   z-index: 10;
@@ -6,39 +6,148 @@ nav {
   align-items: center;
   justify-content: center;
   width: 100vw;
-  height: 10vh;
+  height: 14vh;
 
-  >div{
+  .navbar-content {
     width: 100%;
     max-width: 1440px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+  }
 
+  .logo {
+    font-size: 20px;
+    color: white;
+    padding-left: 20px;
+    cursor: pointer;
+    text-decoration: none;
+  }
 
-    > a {
-      font-size: 20px;
-      color: white;
-      padding-left: 20px;
-      cursor: pointer;
-      color: white;
-      text-decoration: none;
-    }
-  
-    > div {
-      display: flex;
-      color: white;
-      gap: 16px;
-      padding-right: 20px;
-  
-      > a {
-        padding: 2px;
-        color: white;
-        text-decoration: none;
-        cursor: pointer;
+  .burger-menu {
+    display: none;
+    font-size: 24px;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    position: relative;
+    width: 24px;
+    height: 24px;
+    margin-right: 15px;
+
+    span {
+      display: block;
+      width: 100%;
+      height: 2px;
+      background-color: white;
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+      transition: 0.3s ease;
+
+      &::before,
+      &::after {
+        content: "";
+        width: 100%;
+        height: 2px;
+        background-color: white;
+        position: absolute;
+        left: 0;
+        transition: 0.3s ease;
+      }
+
+      &::before {
+        top: -8px;
+      }
+
+      &::after {
+        top: 8px;
+      }
+
+      &.open {
+        background-color: transparent;
+
+        &::before {
+          transform: rotate(45deg);
+          top: 0;
+        }
+
+        &::after {
+          transform: rotate(-45deg);
+          top: 0;
+        }
       }
     }
   }
 
- 
+  .nav-links {
+    display: flex;
+    gap: 16px;
+    padding-right: 20px;
+
+    a {
+      padding: 2px;
+      color: white;
+      text-decoration: none;
+      cursor: pointer;
+      position: relative;
+      transition: color 0.3s ease, opacity 0.3s ease;
+
+      &.active {
+        border-bottom: 2px solid white;
+      }
+
+      &:hover {
+        color: #ffffff;
+      }
+
+      &:hover::after {
+        content: "";
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background-color: white;
+      }
+    }
+
+    &:hover a {
+      opacity: 0.5;
+    }
+
+    a:hover {
+      opacity: 1;
+    }
+  }
+  @media (max-width: 450px) {
+    .burger-menu {
+      display: block;
+    }
+
+    .nav-links {
+      display: none;
+      flex-direction: column;
+      position: absolute;
+      top: 60px;
+      right: 40px;
+      width: 100%;
+      padding: 10px 0;
+      text-align: right;
+
+      &.open {
+        display: flex;
+      }
+
+      a {
+        padding: 10px 20px;
+        width: 100%;
+        color: white;
+        text-align: right;
+        font-size: 18px;
+      }
+    }
+  }
 }
