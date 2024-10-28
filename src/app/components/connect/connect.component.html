@@ -1,19 +1,59 @@
 <section class="connect-me-section">
   <div class="form-container">
-    <h2>Connect Me</h2>
-    <form>
+    <h2>Connect with me</h2>
+    <form [formGroup]="connectForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
-        <input type="text" placeholder="Name" required />
-        <input type="email" placeholder="Email" required />
+        <input type="text" formControlName="name" placeholder="Name" />
+        <div *ngIf="name?.invalid && name?.touched" class="error">
+          <small *ngIf="name?.errors?.['required']">Name is required.</small>
+        </div>
       </div>
+
       <div class="form-group">
-        <input type="text" placeholder="Phone Number" required />
+        <input type="email" formControlName="email" placeholder="Email" />
+        <div *ngIf="email?.invalid && email?.touched" class="error">
+          <small *ngIf="email?.errors?.['required']">Email is required.</small>
+          <small *ngIf="email?.errors?.['email']"
+            >Please enter a valid email address.</small
+          >
+        </div>
       </div>
+
       <div class="form-group">
-        <textarea placeholder="Message" rows="5" required></textarea>
+        <input
+          type="text"
+          formControlName="phoneNumber"
+          placeholder="Phone Number"
+        />
+        <div *ngIf="phoneNumber?.invalid && phoneNumber?.touched" class="error">
+          <small *ngIf="phoneNumber?.errors?.['required']"
+            >Phone number is required.</small
+          >
+          <small *ngIf="phoneNumber?.errors?.['pattern']"
+            >Phone number should only contain numbers.</small
+          >
+        </div>
       </div>
+
+      <div class="form-group">
+        <textarea
+          formControlName="message"
+          placeholder="Message"
+          rows="5"
+        ></textarea>
+        <div *ngIf="message?.invalid && message?.touched" class="error">
+          <small *ngIf="message?.errors?.['required']"
+            >Message is required.</small
+          >
+        </div>
+      </div>
+
       <div class="form-group">
         <button type="submit" class="submit-btn">Send</button>
+      </div>
+
+      <div *ngIf="messageSent" class="success-message">
+        Message sent successfully
       </div>
     </form>
   </div>
