@@ -95,10 +95,6 @@
       position: relative;
       transition: color 0.3s ease, opacity 0.3s ease;
 
-      &.active {
-        border-bottom: 2px solid white;
-      }
-
       &:hover {
         color: #ffffff;
       }
@@ -131,21 +127,21 @@
       display: none;
       flex-direction: column;
       position: absolute;
-      top: 60px;
-      right: 40px;
+      top: 75px;
+      right: 0px;
       width: 100%;
-      padding: 10px 0;
-      text-align: right;
+      padding: 15px 0;
+      text-align: center;
+      background-color: black;
 
       &.open {
         display: flex;
       }
 
       a {
-        padding: 10px 20px;
         width: 100%;
         color: white;
-        text-align: right;
+        text-align: center;
         font-size: 18px;
       }
     }
