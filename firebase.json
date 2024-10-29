@@ -7,7 +7,7 @@
     "indexes": "firestore.indexes.json"
   },
   "hosting": {
-    "public": "public",
+    "public": "dist/filip_kufner/browser",
     "ignore": [
       "firebase.json",
       "**/.*",
