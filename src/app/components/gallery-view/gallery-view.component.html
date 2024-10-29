@@ -4,9 +4,9 @@
     <div class="navigation-links">
       <span class="nav-link" (click)="openCategorySelector()">Work</span>
       <span class="separator" *ngIf="category$ | async"> > </span>
-      <span class="nav-link" *ngIf="category$ | async" (click)="openCategorySelector()">{{ (category$ | async)?.title }}</span>
+      <span class="nav-link" *ngIf="category$ | async" (click)="openCategorySelector()">{{ (category$ | async)?.name }}</span>
       <span class="separator" *ngIf="subCategory"> > </span>
-      <span *ngIf="subCategory">{{ subCategory.title }}</span>
+      <span *ngIf="subCategory">{{ subCategory.name }}</span>
     </div>
     <p *ngIf="subCategory">{{ subCategory.description }}</p>
   </div>

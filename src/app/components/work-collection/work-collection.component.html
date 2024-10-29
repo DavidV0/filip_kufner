@@ -2,9 +2,9 @@
   <div class="work-grid" *ngIf="!(isLoading)">
     <app-work-category
       *ngFor="let category of categories$ | async"
-      [title]="category.title"
-      [imageUrl]="category.imageUrl"
-      [categoryId]="category.id"
+      [title]="category.name"
+      [imageUrl]="category.imageUrl ?? ''"
+      [categoryId]="category.id ?? ''"
     >
     </app-work-category>
   </div>

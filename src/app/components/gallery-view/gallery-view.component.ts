@@ -30,7 +30,7 @@ export class GalleryViewComponent implements OnInit {
       
       this.category$ = this.categoryService.getCategoryById(categoryId);
       this.category$.subscribe(category => {
-        this.subCategory = category?.subCategories.find(sub => sub.id === subCategoryId);
+        this.subCategory = category?.subcategories?.find(sub => sub.id === subCategoryId);
 
         if (!category || !this.subCategory) {
           this.router.navigate(['/work']);

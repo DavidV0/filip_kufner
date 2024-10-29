@@ -13,6 +13,7 @@ export class CategoryService {
   constructor(private firestore: Firestore) {
     const categoriesCollection = collection(this.firestore, 'categories');
     this.categories$ = collectionData(categoriesCollection, { idField: 'id' }) as Observable<Category[]>;
+    this.categories$.subscribe(categories => console.log(categories));
   }
 
   getCategories(): Observable<Category[]> {

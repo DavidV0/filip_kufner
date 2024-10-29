@@ -1,6 +1,7 @@
 .work-page {
   background-color: black;
   min-height: 100vh;
+  padding-top: 10vh;
   color: white;
 }
 
@@ -60,6 +61,7 @@
   flex-direction: column;
   width: 400px;
   height: 400px;
+  z-index: 1;
 
   background-color: #111;
   border-radius: 10px;

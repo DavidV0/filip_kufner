@@ -5,7 +5,7 @@
       <span class="back-arrow" (click)="clearSelectedCategory()">
         <i class="fas fa-arrow-left"></i>
       </span>
-      <h1>{{ selectedCategory.title }}</h1>
+      <h1>{{ selectedCategory.name }}</h1>
     </div>
   </div>
 
@@ -14,16 +14,16 @@
     <div class="subcategories-grid">
       <div 
         class="subcategory-card" 
-        *ngFor="let subCategory of selectedCategory.subCategories"
+        *ngFor="let subCategory of selectedCategory.subcategories"
         (click)="onSubCategoryClick(subCategory)"
       >
         <!-- Show first image as cover if available -->
         <div class="subcategory-image" 
-             [ngStyle]="{'background-image': 'url(' + (subCategory.images[0] || 'assets/images/placeholder.jpg') + ')'}"
+         [ngStyle]="{'background-image': 'url(' + (subCategory.imageUrl || 'assets/images/placeholder.jpg') + ')', 'height': '100%'}"
         >
         </div>
         <div class="subcategory-info">
-          <h2>{{ subCategory.title }}</h2>
+          <h2>{{ subCategory.name }}</h2>
           <p *ngIf="subCategory.description">{{ subCategory.description }}</p>
           <span class="image-count">{{ subCategory.images.length }} images</span>
         </div>

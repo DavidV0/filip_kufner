@@ -13,10 +13,23 @@
   border-radius: 10px;
   cursor: pointer;
   overflow: hidden;
-  transition: transform 0.3s ease;
+  transition: all 0.3s ease;
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0);
+    transition: all 0.3s ease;
+  }
 
   &:hover {
-    filter: brightness(0.5);
+    &:before {
+      background: rgba(0, 0, 0, 0.5);
+    }
     transform: scale(1.01);
   }
 }
@@ -28,9 +41,13 @@
   transform: translate(-50%, -50%);
   color: white;
   padding: 10px 20px;
-  border-radius: 5px;
   font-size: 2rem;
   text-align: center;
-  background-color: rgba(0, 0, 0, 0.5);
- 
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.work-category:hover .title-overlay {
+  opacity: 1;
 }

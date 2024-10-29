@@ -14,7 +14,7 @@
 
       <div class="form-group">
         <label for="image">Category Image:</label>
-        <input type="file" id="image" (change)="onFileSelected($event)" accept="image/*">
+        <input type="file" id="image" (change)="onFileSelected($event, 'category')" accept="image/*">
       </div>
 
       <button type="submit" [disabled]="!categoryForm.valid || !selectedFile || isLoading">
@@ -37,18 +37,67 @@
           <h5>Subcategories:</h5>
           <ul>
             <li *ngFor="let sub of category.subcategories" class="subcategory-item">
-              <img [src]="sub.imageUrl" alt="subcategory image" *ngIf="sub.imageUrl">
-              <span>{{ sub.name }}</span>
-              <button (click)="deleteSubcategory(category, sub)" class="delete-btn">Delete</button>
+              <!-- Add error handling for image loading -->
+              <div class="subcategory-header">
+                <div class="cover-image-container">
+                  <img 
+                    [src]="sub.imageUrl" 
+                    alt="subcategory cover" 
+                    class="cover-image"
+                    (error)="sub.imageUrl = 'assets/images/placeholder.jpg'"
+                  >
+                </div>
+                <div class="subcategory-info">
+                  <span class="name">{{ sub.name }}</span>
+                  <span class="description" *ngIf="sub.description">{{ sub.description }}</span>
+                  <span class="image-count">{{ sub.images.length || 0 }} images</span>
+                </div>
+              </div>
+
+              <!-- Images grid -->
+              <div class="images-grid">
+                <div *ngFor="let image of sub.images" class="image-container">
+                  <img [src]="image" alt="subcategory image">
+                  <button 
+                    class="delete-image-btn"
+                    (click)="deleteImageFromSubcategory(category, sub, image)"
+                    title="Delete image"
+                  >
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Action buttons -->
+              <div class="subcategory-actions">
+                <div class="add-images">
+                  <input 
+                    type="file" 
+                    [id]="'add-images-' + sub.id" 
+                    (change)="addImagesToSubcategory(category, sub, $event)" 
+                    accept="image/*" 
+                    multiple
+                    style="display: none"
+                  >
+                  <label [for]="'add-images-' + sub.id" class="add-images-btn">
+                    <i class="fas fa-plus"></i> Add Images
+                  </label>
+                </div>
+                <button (click)="deleteSubcategory(category, sub)" class="delete-btn">
+                  <i class="fas fa-trash"></i> Delete Subcategory
+                </button>
+              </div>
             </li>
           </ul>
           
           <!-- Add Subcategory Form -->
           <form [formGroup]="subcategoryForm" class="add-subcategory">
             <input type="text" formControlName="name" placeholder="New subcategory name">
-            <input type="file" (change)="onFileSelected($event, true)" accept="image/*">
+            <input type="text" formControlName="description" placeholder="Description (optional)">
+            <input type="file" (change)="onFileSelected($event, 'subcategory')" accept="image/*">
+            <input type="file" (change)="onFileSelected($event, 'images')" accept="image/*" multiple>
             <button (click)="addSubcategory(category.id!)" 
-                    [disabled]="!subcategoryForm.valid || !selectedSubcategoryFile">
+                    [disabled]="!subcategoryForm.valid || !selectedSubcategoryFile || selectedImages.length === 0">
               Add Subcategory
             </button>
           </form>

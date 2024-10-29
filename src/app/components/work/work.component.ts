@@ -52,7 +52,5 @@ export class WorkComponent implements OnInit {
     this.selectedCategory = null;
   }
 
-  handleImageError(event: any): void {
-    event.target.src = 'assets/images/placeholder.png'; 
-  }
+ 
 }
