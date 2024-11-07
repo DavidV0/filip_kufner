@@ -1,3 +1,9 @@
+.container {
+  display: flex;
+  justify-content: center;
+  width: 100vw;
+  background-color: black;
+}
 .admin-dashboard {
   height: 100vh;
   padding-top: 12vh;
@@ -5,7 +11,7 @@
   color: white;
   width: 100vw;
   max-width: 1440px;
-  margin: 0 auto;
+  margin: 0;
   overflow-y: auto;
 
   .category-form {
@@ -162,7 +168,8 @@
             gap: 10px;
             margin-top: 10px;
 
-            .add-images-btn, .delete-btn {
+            .add-images-btn,
+            .delete-btn {
               display: flex;
               align-items: center;
               gap: 5px;
@@ -256,7 +263,7 @@
 
   .logout-btn {
     background: #6c757d;
-    
+
     &:hover {
       background: #5a6268;
     }

@@ -15,48 +15,47 @@ import { Router } from '@angular/router';
       </button>
     </div>
   `,
-  styles: [`
-    .login-container {
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      background-color: black;
-      color: white;
-    }
-
-    .login-btn {
-      padding: 12px 24px;
-      background: #4285f4;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 16px;
-      margin-top: 20px;
-      transition: background-color 0.2s;
-
-      &:hover {
-        background: #357abd;
+  styles: [
+    `
+      .login-container {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: black;
+        color: white;
       }
-    }
-  `]
+
+      .login-btn {
+        padding: 12px 24px;
+        background: #4285f4;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        margin-top: 20px;
+        transition: background-color 0.2s;
+
+        &:hover {
+          background: #357abd;
+        }
+      }
+    `,
+  ],
 })
 export class LoginComponent {
-  constructor(
-    private auth: Auth,
-    private router: Router
-  ) {}
+  constructor(private auth: Auth, private router: Router) {}
 
   async signInWithGoogle() {
     try {
       const provider = new GoogleAuthProvider();
       const result = await signInWithPopup(this.auth, provider);
-      
+
       // Only allow specific email(s) to login
-      const allowedEmails = ['davidveli2000@hotmail.com']; // Replace with the videographer's email
-      
+      const allowedEmails = ['davidveli2000@hotmail.com'];
+
       if (result.user && allowedEmails.includes(result.user.email!)) {
         this.router.navigate(['/admin']);
       } else {
@@ -67,4 +66,4 @@ export class LoginComponent {
       console.error('Error signing in:', error);
     }
   }
-} 
+}
