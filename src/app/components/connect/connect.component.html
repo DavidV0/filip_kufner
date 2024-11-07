@@ -49,7 +49,13 @@
       </div>
 
       <div class="form-group">
-        <button type="submit" class="submit-btn">Send</button>
+        <button
+          type="submit"
+          class="submit-btn"
+          [disabled]="!connectForm.valid || isSubmitting"
+        >
+          {{ isSubmitting ? "Submitting..." : "Send Message" }}
+        </button>
       </div>
 
       <div *ngIf="messageSent" class="success-message">

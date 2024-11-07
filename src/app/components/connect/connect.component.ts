@@ -14,6 +14,7 @@ import emailjs, { EmailJSResponseStatus } from 'emailjs-com';
 export class ConnectComponent {
   connectForm: FormGroup;
   messageSent = false;
+  isSubmitting = false;
 
   constructor(private fb: FormBuilder) {
     this.connectForm = this.fb.group({
@@ -41,36 +42,35 @@ export class ConnectComponent {
   }
 
   onSubmit() {
-    if (this.connectForm.valid) {
-      const templateParams = {
-        name: this.connectForm.value.name,
-        email: this.connectForm.value.email,
-        phoneNumber: this.connectForm.value.phoneNumber,
-        message: this.connectForm.value.message,
-      };
+    if (this.connectForm.valid && !this.isSubmitting) {
+      this.isSubmitting = true;
+      const formData = this.connectForm.value;
 
       emailjs
         .send(
-          'service_cznojch',
-          'template_cq7mbtg',
-          templateParams,
-          '1b7VWa2XIImE8F2Fs'
+          'service_y3und05',
+          'template_9n7t28q',
+          {
+            name: formData.name,
+            email: formData.email,
+            message: formData.message,
+            phone: formData.phoneNumber,
+            to_name: 'Filip Kufner',
+          },
+          '9UzArne1mvG0p0kDq'
         )
         .then(
           (response: EmailJSResponseStatus) => {
-            console.log(
-              'E-Mail erfolgreich gesendet!',
-              response.status,
-              response.text
-            );
             this.connectForm.reset();
             this.messageSent = true;
+            this.isSubmitting = false;
             setTimeout(() => {
               this.messageSent = false;
             }, 3000);
           },
           (error) => {
             console.error('E-Mail-Versandfehler:', error);
+            this.isSubmitting = false;
           }
         );
     } else {
