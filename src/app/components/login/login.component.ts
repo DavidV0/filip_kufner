@@ -54,7 +54,10 @@ export class LoginComponent {
       const result = await signInWithPopup(this.auth, provider);
 
       // Only allow specific email(s) to login
-      const allowedEmails = ['davidveli2000@hotmail.com'];
+      const allowedEmails = [
+        'davidveli2000@hotmail.com',
+        'filipkufner99@gmail.com',
+      ];
 
       if (result.user && allowedEmails.includes(result.user.email!)) {
         this.router.navigate(['/admin']);

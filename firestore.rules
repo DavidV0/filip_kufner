@@ -4,7 +4,7 @@ service cloud.firestore {
     match /{document=**} {
       allow read: if true;  // Anyone can read
       allow write: if request.auth != null 
-                  && request.auth.token.email == 'davidveli2000@hotmail.com';  // Only specific email can write
+                  && request.auth.token.email == 'filipkufner99@gmail.com';  // Only specific email can write
     }
   }
 }
