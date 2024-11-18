@@ -16,7 +16,7 @@
   transition: all 0.3s ease;
 
   &:before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
@@ -50,4 +50,13 @@
 
 .work-category:hover .title-overlay {
   opacity: 1;
+}
+
+// Media query to disable hover effect on phones and tablets
+@media (max-width: 768px) {
+  .title-overlay {
+    opacity: 1;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+  }
 }
