@@ -1,8 +1,30 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Storage, ref, uploadBytes, getDownloadURL, deleteObject } from '@angular/fire/storage';
-import { Firestore, collection, addDoc, deleteDoc, doc, collectionData, updateDoc, arrayUnion, arrayRemove } from '@angular/fire/firestore';
+import {
+  FormsModule,
+  ReactiveFormsModule,
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import {
+  Storage,
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  deleteObject,
+} from '@angular/fire/storage';
+import {
+  Firestore,
+  collection,
+  addDoc,
+  deleteDoc,
+  doc,
+  collectionData,
+  updateDoc,
+  arrayUnion,
+  arrayRemove,
+} from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { Auth, authState } from '@angular/fire/auth';
 import { map } from 'rxjs/operators';
@@ -14,7 +36,7 @@ import { Category, SubCategory } from '../../interfaces/category.interface';
   standalone: true,
   imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './add.component.html',
-  styleUrl: './add.component.scss'
+  styleUrl: './add.component.scss',
 })
 export class AddComponent implements OnInit {
   categoryForm: FormGroup;
@@ -34,26 +56,26 @@ export class AddComponent implements OnInit {
     private router: Router
   ) {
     this.categoryForm = this.fb.group({
-      name: ['', Validators.required]
+      name: ['', Validators.required],
     });
 
     this.subcategoryForm = this.fb.group({
       name: ['', Validators.required],
-      description: ['']
+      description: [''],
     });
 
-    this.isAuthenticated$ = authState(this.auth).pipe(
-      map(user => !!user)
-    );
+    this.isAuthenticated$ = authState(this.auth).pipe(map((user) => !!user));
 
     const categoriesCollection = collection(this.firestore, 'categories');
-    this.categories$ = collectionData(categoriesCollection, { idField: 'id' }) as Observable<Category[]>;
+    this.categories$ = collectionData(categoriesCollection, {
+      idField: 'id',
+    }) as Observable<Category[]>;
   }
 
   ngOnInit(): void {}
 
   onFileSelected(event: any, type: 'category' | 'subcategory' | 'images') {
-    switch(type) {
+    switch (type) {
       case 'category':
         this.selectedFile = event.target.files[0];
         break;
@@ -69,7 +91,7 @@ export class AddComponent implements OnInit {
   async uploadImage(file: File, path: string): Promise<string> {
     const filePath = `${path}/${Date.now()}_${file.name}`;
     const storageRef = ref(this.storage, filePath);
-    
+
     try {
       await uploadBytes(storageRef, file);
       const downloadUrl = await getDownloadURL(storageRef);
@@ -81,23 +103,23 @@ export class AddComponent implements OnInit {
   }
 
   async uploadMultipleImages(files: File[], path: string): Promise<string[]> {
-    const uploadPromises = files.map(file => this.uploadImage(file, path));
+    const uploadPromises = files.map((file) => this.uploadImage(file, path));
     return Promise.all(uploadPromises);
   }
 
   async addCategory() {
     if (!this.categoryForm.valid || !this.selectedFile) return;
-    
+
     this.isLoading = true;
     try {
       const imageUrl = await this.uploadImage(this.selectedFile, 'categories');
-      
+
       const categoriesRef = collection(this.firestore, 'categories');
       await addDoc(categoriesRef, {
         name: this.categoryForm.get('name')?.value,
         subcategories: [],
         imageUrl: imageUrl,
-        createdAt: new Date()
+        createdAt: new Date(),
       });
 
       this.categoryForm.reset();
@@ -110,17 +132,12 @@ export class AddComponent implements OnInit {
   }
 
   async addSubcategory(categoryId: string) {
-    if (!this.subcategoryForm.valid || !this.selectedSubcategoryFile || !this.selectedImages.length) return;
+    if (!this.subcategoryForm.valid || !this.selectedSubcategoryFile) return;
 
     try {
       const coverImageUrl = await this.uploadImage(
-        this.selectedSubcategoryFile, 
+        this.selectedSubcategoryFile,
         `categories/${categoryId}/subcategories`
-      );
-
-      const uploadedImages = await this.uploadMultipleImages(
-        this.selectedImages, 
-        `categories/${categoryId}/images`
       );
 
       const newSubcategory: SubCategory = {
@@ -128,17 +145,16 @@ export class AddComponent implements OnInit {
         name: this.subcategoryForm.get('name')?.value,
         imageUrl: coverImageUrl,
         description: this.subcategoryForm.get('description')?.value || '',
-        images: uploadedImages
+        images: [],
       };
 
       const categoryRef = doc(this.firestore, 'categories', categoryId);
       await updateDoc(categoryRef, {
-        subcategories: arrayUnion(newSubcategory)
+        subcategories: arrayUnion(newSubcategory),
       });
 
       this.subcategoryForm.reset();
       this.selectedSubcategoryFile = null;
-      this.selectedImages = [];
     } catch (error) {
       console.error('Error adding subcategory:', error);
     }
@@ -157,7 +173,7 @@ export class AddComponent implements OnInit {
       // Remove subcategory from array
       const categoryRef = doc(this.firestore, 'categories', category.id);
       await updateDoc(categoryRef, {
-        subcategories: arrayRemove(subcategory)
+        subcategories: arrayRemove(subcategory),
       });
     } catch (error) {
       console.error('Error deleting subcategory:', error);
@@ -205,38 +221,48 @@ export class AddComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
-  async addImagesToSubcategory(category: Category, subcategory: SubCategory, event: any) {
+  async addImagesToSubcategory(
+    category: Category,
+    subcategory: SubCategory,
+    event: any
+  ) {
     const files = event.target.files;
     if (!files || files.length === 0) return;
 
     try {
       const newImages = await this.uploadMultipleImages(
-        Array.from(files), 
+        Array.from(files),
         `subcategories/${category.id}/images`
       );
 
       // Find the subcategory index
-      const subcategoryIndex = category.subcategories?.findIndex(sub => sub.id === subcategory.id) ?? -1;
+      const subcategoryIndex =
+        category.subcategories?.findIndex((sub) => sub.id === subcategory.id) ??
+        -1;
       if (subcategoryIndex === -1) return;
 
       // Update the subcategory with new images
       const updatedSubcategories = [...(category.subcategories || [])];
       updatedSubcategories[subcategoryIndex] = {
         ...subcategory,
-        images: [...subcategory.images, ...newImages]
+        images: [...subcategory.images, ...newImages],
       };
 
       // Update the category document
       const categoryRef = doc(this.firestore, 'categories', category.id!);
       await updateDoc(categoryRef, {
-        subcategories: updatedSubcategories
+        subcategories: updatedSubcategories,
       });
     } catch (error) {
       console.error('Error adding images to subcategory:', error);
     }
   }
 
-  async deleteImageFromSubcategory(category: Category, subcategory: SubCategory, imageUrl: string) {
+  async deleteImageFromSubcategory(
+    category: Category,
+    subcategory: SubCategory,
+    imageUrl: string
+  ) {
     if (!category.id || !subcategory.id) return;
 
     try {
@@ -245,20 +271,22 @@ export class AddComponent implements OnInit {
       await deleteObject(storageRef);
 
       // Find and update the subcategory
-      const subcategoryIndex = category.subcategories?.findIndex(sub => sub.id === subcategory.id) ?? -1;
+      const subcategoryIndex =
+        category.subcategories?.findIndex((sub) => sub.id === subcategory.id) ??
+        -1;
       if (subcategoryIndex === -1) return;
 
       // Create updated subcategories array with the image removed
       const updatedSubcategories = [...(category.subcategories || [])];
       updatedSubcategories[subcategoryIndex] = {
         ...subcategory,
-        images: subcategory.images.filter(img => img !== imageUrl)
+        images: subcategory.images.filter((img) => img !== imageUrl),
       };
 
       // Update the category document
       const categoryRef = doc(this.firestore, 'categories', category.id);
       await updateDoc(categoryRef, {
-        subcategories: updatedSubcategories
+        subcategories: updatedSubcategories,
       });
     } catch (error) {
       console.error('Error deleting image from subcategory:', error);

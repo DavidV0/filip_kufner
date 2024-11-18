@@ -7,58 +7,61 @@
       </div>
 
       <!-- Add Category Form -->
-      <form
-        [formGroup]="categoryForm"
-        (ngSubmit)="addCategory()"
-        class="category-form"
-      >
-        <div class="form-group">
-          <label for="name">Category Name:</label>
-          <input
-            type="text"
-            id="name"
-            formControlName="name"
-            placeholder="Enter category name"
-          />
-        </div>
-
-        <div class="form-group">
-          <label for="image">Category Image:</label>
-          <input
-            type="file"
-            id="image"
-            (change)="onFileSelected($event, 'category')"
-            accept="image/*"
-          />
-        </div>
-
-        <button
-          type="submit"
-          [disabled]="!categoryForm.valid || !selectedFile || isLoading"
+      <div class="create-category">
+        <h3>Hier kannst du eine neue Kategorie erstellen</h3>
+        <form
+          [formGroup]="categoryForm"
+          (ngSubmit)="addCategory()"
+          class="category-form"
         >
-          {{ isLoading ? "Adding..." : "Add Category" }}
-        </button>
-      </form>
+          <div class="form-group">
+            <label for="name">Category Name:</label>
+            <input
+              type="text"
+              id="name"
+              formControlName="name"
+              placeholder="Enter category name"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="image">Category Image:</label>
+            <input
+              type="file"
+              id="image"
+              (change)="onFileSelected($event, 'category')"
+              accept="image/*"
+            />
+          </div>
+
+          <button
+            type="submit"
+            [disabled]="!categoryForm.valid || !selectedFile || isLoading"
+          >
+            {{ isLoading ? "Adding..." : "Add Category" }}
+          </button>
+        </form>
+      </div>
 
       <!-- Categories List -->
       <div class="categories-list">
-        <h3>Existing Categories</h3>
+        <h3>Deine Kategorien</h3>
         <div *ngFor="let category of categories$ | async" class="category-item">
           <div class="category-header">
+            <h3>{{ category.name }}</h3>
             <img
               [src]="category.imageUrl"
               alt="category image"
               *ngIf="category.imageUrl"
             />
-            <h4>{{ category.name }}</h4>
             <button (click)="deleteCategory(category)" class="delete-btn">
-              Delete Category
+              Löschen
             </button>
           </div>
 
           <!-- Subcategories -->
           <div class="subcategories">
-            <h5>Subcategories:</h5>
+            <h3>Unterkategorien:</h3>
             <ul>
               <li
                 *ngFor="let sub of category.subcategories"
@@ -114,53 +117,52 @@
                       [for]="'add-images-' + sub.id"
                       class="add-images-btn"
                     >
-                      <i class="fas fa-plus"></i> Add Images
+                      <i class="fas fa-plus"></i> Bilder hinzufügen
                     </label>
                   </div>
                   <button
                     (click)="deleteSubcategory(category, sub)"
                     class="delete-btn"
                   >
-                    <i class="fas fa-trash"></i> Delete Subcategory
+                    <i class="fas fa-trash"></i> Unterkategorie löschen
                   </button>
                 </div>
               </li>
             </ul>
 
             <!-- Add Subcategory Form -->
-            <form [formGroup]="subcategoryForm" class="add-subcategory">
-              <input
-                type="text"
-                formControlName="name"
-                placeholder="New subcategory name"
-              />
-              <input
-                type="text"
-                formControlName="description"
-                placeholder="Description (optional)"
-              />
-              <input
-                type="file"
-                (change)="onFileSelected($event, 'subcategory')"
-                accept="image/*"
-              />
-              <input
-                type="file"
-                (change)="onFileSelected($event, 'images')"
-                accept="image/*"
-                multiple
-              />
-              <button
-                (click)="addSubcategory(category.id!)"
-                [disabled]="
-                  !subcategoryForm.valid ||
-                  !selectedSubcategoryFile ||
-                  selectedImages.length === 0
-                "
-              >
-                Add Subcategory
-              </button>
-            </form>
+            <div class="add-subcategory-container">
+              <form [formGroup]="subcategoryForm" class="add-subcategory">
+                <input
+                  type="text"
+                  formControlName="name"
+                  placeholder="Unterkategorie Name"
+                />
+                <input
+                  type="text"
+                  formControlName="description"
+                  placeholder="Beschreibung (optional)"
+                />
+                <div class="dflex">
+                  <label for="subcategoryImage"> Cover Bild:</label>
+                  <input
+                    name="subcategoryImage"
+                    type="file"
+                    (change)="onFileSelected($event, 'subcategory')"
+                    accept="image/*"
+                  />
+                </div>
+
+                <button
+                  (click)="addSubcategory(category.id!)"
+                  [disabled]="
+                    !subcategoryForm.valid || !selectedSubcategoryFile
+                  "
+                >
+                  Add Subcategory
+                </button>
+              </form>
+            </div>
           </div>
         </div>
       </div>
