@@ -6,6 +6,7 @@ import { WorkCollectionComponent } from './components/work-collection/work-colle
 import { FooterComponent } from './components/shared/footer/footer.component';
 import { AboutMeComponent } from './components/about-me/about-me.component';
 import { ConnectComponent } from './components/connect/connect.component';
+import { ScrollToTopService } from './services/scroll-to-top.service';
 
 @Component({
   selector: 'app-root',
@@ -25,4 +26,6 @@ import { ConnectComponent } from './components/connect/connect.component';
 })
 export class AppComponent {
   title = 'madebyfilip';
+
+  constructor(private scrollToTopService: ScrollToTopService) {}
 }
