@@ -3,14 +3,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { CategoryService } from '../../services/category.service';
 import { Category, SubCategory } from '../../interfaces/category.interface';
-import { WorkCollectionComponent } from "../work-collection/work-collection.component";
+import { WorkCollectionComponent } from '../work-collection/work-collection.component';
 
 @Component({
   selector: 'app-work',
   standalone: true,
   imports: [CommonModule, WorkCollectionComponent],
   templateUrl: './work.component.html',
-  styleUrl: './work.component.scss'
+  styleUrl: './work.component.scss',
 })
 export class WorkComponent implements OnInit {
   selectedCategory?: Category | null;
@@ -22,18 +22,18 @@ export class WorkComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
       if (params['categoryId']) {
-        this.categoryService.getCategoryById(params['categoryId']).subscribe(category => {
-          this.selectedCategory = category;
-          if (!this.selectedCategory) {
-            this.router.navigate(['/home']);
-          }
-        });
+        this.categoryService
+          .getCategoryById(params['categoryId'])
+          .subscribe((category) => {
+            this.selectedCategory = category;
+            if (!this.selectedCategory) {
+              this.router.navigate(['/home']);
+            }
+          });
       }
     });
-
-  
   }
 
   onSubCategoryClick(subCategory: SubCategory) {
@@ -46,11 +46,8 @@ export class WorkComponent implements OnInit {
     this.router.navigate(['/home']);
   }
 
- 
-
   clearSelectedCategory(): void {
     this.selectedCategory = null;
+    this.router.navigate(['/work']);
   }
-
- 
 }
